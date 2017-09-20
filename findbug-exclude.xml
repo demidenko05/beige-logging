@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FindBugsFilter>
+  <Match>
+     <Class name="org.slf4j.impl.BeigeLoggerAdapter" />
+     <Bug pattern="SE_BAD_FIELD" />
+  </Match>
+  <!--see beige-common org.beigesoft.test.DoubleCkeckLockingRiApTest about double check-->
+  <Match>
+     <Class name="org.slf4j.impl.BeigeLoggerFileFactory" />
+     <Bug pattern="DC_DOUBLECHECK" />
+  </Match>
+  <!--it's not true, see above-->
+  <Match>
+     <Class name="org.slf4j.impl.BeigeLoggerFileFactory" />
+     <Bug pattern="IS2_INCONSISTENT_SYNC" />
+  </Match>
+  <!--see beige-common org.beigesoft.test.DoubleCkeckLockingRiApTest about double check-->
+  <Match>
+     <Class name="org.slf4j.impl.BeigeAndroidLoggerFileFactory" />
+     <Bug pattern="DC_DOUBLECHECK" />
+  </Match>
+  <!--it's not true, see above-->
+  <Match>
+     <Class name="org.slf4j.impl.BeigeAndroidLoggerFileFactory" />
+     <Bug pattern="IS2_INCONSISTENT_SYNC" />
+  </Match>
+  <!--see beige-common org.beigesoft.test.DoubleCkeckLockingRiApTest about double check-->
+  <Match>
+     <Class name="org.apache.commons.logging.impl.LogFactoryBeigeLogFile" />
+     <Bug pattern="DC_DOUBLECHECK" />
+  </Match>
+  <!--it's not true, see above-->
+  <Match>
+     <Class name="org.apache.commons.logging.impl.LogFactoryBeigeLogFile" />
+     <Bug pattern="IS2_INCONSISTENT_SYNC" />
+  </Match>
+  <!--see beige-common org.beigesoft.test.DoubleCkeckLockingRiApTest about double check-->
+  <Match>
+     <Class name="org.apache.commons.logging.impl.LogFactoryBeigeLogFileAndroid" />
+     <Bug pattern="DC_DOUBLECHECK" />
+  </Match>
+  <!--it's not true, see above-->
+  <Match>
+     <Class name="org.apache.commons.logging.impl.LogFactoryBeigeLogFileAndroid" />
+     <Bug pattern="IS2_INCONSISTENT_SYNC" />
+  </Match>
+</FindBugsFilter>
