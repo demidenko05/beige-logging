@@ -65,6 +65,16 @@ public abstract class ALoggerFile extends ALogger {
   private long maxIdleTime = 5000;
 
   /**
+   * <p>Current logs count that emptied after closing file.</p>
+   **/
+  private int logsCount;
+
+  /**
+   * <p>Max logs count to close file, 300 default.</p>
+   **/
+  private int maxLogsCountToClose = 300;
+
+  /**
    * <p>If close file after make log record.</p>
    **/
   private Boolean isCloseFileAfterRecord = false;
@@ -184,8 +194,20 @@ public abstract class ALoggerFile extends ALogger {
         }
       }
     } else {
+      if (this.writer != null
+        && this.logsCount > this.maxLogsCountToClose) {
+        this.logsCount = 0;
+        try {
+          this.writer.close();
+        } catch (Exception ex) {
+          ex.printStackTrace();
+        } finally {
+          this.writer = null;
+        }
+      }
       try {
         lazyGetWriter().write(pMsg);
+        this.logsCount++;
         this.writer.flush();
       } catch (Exception ex) {
         ex.printStackTrace();
@@ -249,6 +271,7 @@ public abstract class ALoggerFile extends ALogger {
               } catch (Exception ex) {
                 ex.printStackTrace();
               } finally {
+                ALoggerFile.this.logsCount = 0;
                 ALoggerFile.this.writer = null;
                 ALoggerFile.this.currentFile = null;
               }
@@ -380,5 +403,31 @@ public abstract class ALoggerFile extends ALogger {
    **/
   public final synchronized void setCloserFile(final CloserFile pCloserFile) {
     this.closerFile = pCloserFile;
+  }
+
+  /**
+   * <p>Getter for logsCount.</p>
+   * @return int
+   **/
+  public final synchronized int getLogsCount() {
+    return this.logsCount;
+  }
+
+
+  /**
+   * <p>Getter for maxLogsCountToClose.</p>
+   * @return int
+   **/
+  public final synchronized int getMaxLogsCountToClose() {
+    return this.maxLogsCountToClose;
+  }
+
+  /**
+   * <p>Setter for maxLogsCountToClose.</p>
+   * @param pMaxLogsCountToClose reference
+   **/
+  public final synchronized void setMaxLogsCountToClose(
+    final int pMaxLogsCountToClose) {
+    this.maxLogsCountToClose = pMaxLogsCountToClose;
   }
 }
