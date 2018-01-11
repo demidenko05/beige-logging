@@ -1,4 +1,4 @@
-package org.beigesoft.log;
+package org.beigesoft.log.acl;
 
 /*
  * Copyright (c) 2017 Beigesoft ™
@@ -22,6 +22,8 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
+
+import org.beigesoft.log.*;
 
 /**
  * <p>

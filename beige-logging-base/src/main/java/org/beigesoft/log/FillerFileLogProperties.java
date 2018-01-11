@@ -50,7 +50,7 @@ public class FillerFileLogProperties {
    **/
   public final void fillProperties(final ALoggerFile pLog,
     final String pFileBaseName) {
-    String logPropFn = "/" + pFileBaseName + ".properties";
+    String logPropFn = File.separator + pFileBaseName + ".properties";
     URL urlSetting = FillerFileLogProperties.class.getResource(logPropFn);
     if (urlSetting != null) {
       this.debugPrinter.println(FillerFileLogProperties.class,
@@ -113,10 +113,10 @@ public class FillerFileLogProperties {
     if (this.logDir == null) {
       if (this.isThereOnlyJar) {
         try {
-          this.logDir = FillerFileLogProperties.class.getProtectionDomain()
-            .getCodeSource().getLocation().toURI().getPath();
-          this.logDir = this.logDir.substring(0, this.logDir
-            .lastIndexOf(File.separator));
+          File jarFl = new File(FillerFileLogProperties.class
+            .getProtectionDomain().getCodeSource().getLocation()
+              .toURI().getPath());
+          this.logDir = jarFl.getParent();
         } catch (Exception ex) {
           this.logDir = System.getProperty("user.dir");
           this.debugPrinter.println(FillerFileLogProperties.class, ex);

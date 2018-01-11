@@ -11,8 +11,7 @@
  */
 
 /**
- * <p>Contains abstraction of simple, non-static, OOP and memory-friendly
- * logger and its implementations.</p>
+ * <p>Contains of Apache Common Logger adapter.</p>
  * @author Yury Demidenko
  */
-package org.beigesoft.log;
+package org.beigesoft.log.acl;

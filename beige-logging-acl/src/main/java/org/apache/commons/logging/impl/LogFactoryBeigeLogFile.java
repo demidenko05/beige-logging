@@ -24,7 +24,7 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.commons.logging.LogConfigurationException;
 
 import org.beigesoft.log.LoggerFile;
-import org.beigesoft.log.LoggerAclAdapter;
+import org.beigesoft.log.acl.LoggerAclAdapter;
 import org.beigesoft.log.FillerFileLogProperties;
 import org.beigesoft.log.IDebugPrinter;
 import org.beigesoft.log.DebugPrinterConsole;

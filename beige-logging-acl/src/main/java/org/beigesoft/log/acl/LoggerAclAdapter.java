@@ -1,4 +1,4 @@
-package org.beigesoft.log;
+package org.beigesoft.log.acl;
 
 /*
  * Copyright (c) 2017 Beigesoft ™
@@ -13,6 +13,8 @@ package org.beigesoft.log;
  */
 
 import org.apache.commons.logging.Log;
+
+import org.beigesoft.log.ILogger;
 
 /**
  * <p>Adapter beige-logging to Apache Common Logging.

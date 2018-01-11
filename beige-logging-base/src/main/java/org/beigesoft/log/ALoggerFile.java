@@ -60,9 +60,9 @@ public abstract class ALoggerFile extends ALogger {
   private long lastWriteTime;
 
   /**
-   * <p>Max idle time to close file in ms, default 5000 - 5 sec.</p>
+   * <p>Max idle time to close file in ms, default 3000 - 3 sec.</p>
    **/
-  private long maxIdleTime = 5000;
+  private long maxIdleTime = 3000;
 
   /**
    * <p>Current logs count that emptied after closing file.</p>
