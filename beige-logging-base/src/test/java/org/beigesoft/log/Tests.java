@@ -82,6 +82,7 @@ public class Tests {
       }
     }
     assertNull(log.getWriter());
+    log.setIsNeedToRun(false);
   }
 
   @Test

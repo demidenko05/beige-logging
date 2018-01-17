@@ -258,6 +258,8 @@ public abstract class ALoggerFile extends ALogger {
 
     @Override
     public final void run() {
+      System.out.println("Started closer of logger file: "
+        + ALoggerFile.this.getFilePath());
       while (this.isNeedToRun) {
         try {
           long currTime = new Date().getTime();
@@ -282,6 +284,8 @@ public abstract class ALoggerFile extends ALogger {
           ex.printStackTrace();
         }
       }
+      System.out.println("Stopped closer of logger file: "
+        + ALoggerFile.this.getFilePath());
     }
 
     /**
@@ -295,20 +299,25 @@ public abstract class ALoggerFile extends ALogger {
 
   //Customized SGS:
   /**
+   * <p>Setter for isNeedToRun.</p>
+   * @param pIsNeedToRun value
+   **/
+  public final synchronized void setIsNeedToRun(final boolean pIsNeedToRun) {
+    if (this.closerFile != null) {
+      this.closerFile.setIsNeedToRun(pIsNeedToRun);
+    }
+  }
+
+  //Simple getters and setters:
+  /**
    * <p>Setter for isCloseFileAfterRecord.</p>
    * @param pIsCloseFileAfterRecord reference
    **/
   public final synchronized void setIsCloseFileAfterRecord(
     final Boolean pIsCloseFileAfterRecord) {
     this.isCloseFileAfterRecord = pIsCloseFileAfterRecord;
-    if (!this.isCloseFileAfterRecord
-      && this.closerFile == null) {
-      this.closerFile = new CloserFile();
-      this.closerFile.start();
-    }
   }
 
-  //Simple getters and setters:
   /**
    * <p>Getter for writer.</p>
    * @return OutputStreamWriter

@@ -66,6 +66,7 @@ class BeigeAndroidLoggerFileFactory implements ILoggerFactory {
           BeigeLoggerAdapter newInstance =
             new BeigeLoggerAdapter(getClass().getSimpleName());
           LoggerFile log = new LoggerFile();
+          log.setIsCloseFileAfterRecord(true);
           if (this.fillerFileLogProperties == null) {
             this.fillerFileLogProperties = new FillerFileLogProperties();
           }
