@@ -258,8 +258,6 @@ public abstract class ALoggerFile extends ALogger {
 
     @Override
     public final void run() {
-      System.out.println("Started closer of logger file: "
-        + ALoggerFile.this.getFilePath());
       while (this.isNeedToRun) {
         try {
           long currTime = new Date().getTime();
@@ -284,8 +282,6 @@ public abstract class ALoggerFile extends ALogger {
           ex.printStackTrace();
         }
       }
-      System.out.println("Stopped closer of logger file: "
-        + ALoggerFile.this.getFilePath());
     }
 
     /**
