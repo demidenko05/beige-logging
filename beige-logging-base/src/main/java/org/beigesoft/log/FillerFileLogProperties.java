@@ -50,7 +50,7 @@ public class FillerFileLogProperties {
    **/
   public final void fillProperties(final ALoggerFile pLog,
     final String pFileBaseName) {
-    String logPropFn = File.separator + pFileBaseName + ".properties";
+    String logPropFn = "/" + pFileBaseName + ".properties";
     URL urlSetting = FillerFileLogProperties.class.getResource(logPropFn);
     if (urlSetting != null) {
       this.debugPrinter.println(FillerFileLogProperties.class,
