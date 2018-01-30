@@ -15,12 +15,12 @@
     <dependency>
       <groupId>org.beigesoft</groupId>
       <artifactId>beige-logging-acl</artifactId>
-      <version>1.0.1-SNAPSHOT</version>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>org.beigesoft</groupId>
       <artifactId>beige-logging-android</artifactId>
-      <version>1.0.1-SNAPSHOT</version>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>com.google.android</groupId>

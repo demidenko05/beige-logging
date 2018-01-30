@@ -20,7 +20,7 @@
     <dependency>
       <groupId>org.beigesoft</groupId>
       <artifactId>beige-logging-base</artifactId>
-      <version>1.0.1-SNAPSHOT</version>
+      <version>${project.version}</version>
     </dependency>
   </dependencies>
 
