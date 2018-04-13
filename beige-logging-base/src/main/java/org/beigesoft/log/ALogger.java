@@ -168,6 +168,7 @@ public abstract class ALogger implements ILogger {
     final Map<String, Object> pClientPreferences) {
     this.clientPreferences = pClientPreferences;
   }
+
   //Utils:
   /**
    * <p>Append thrown message to the buffer.</p>
@@ -190,9 +191,32 @@ public abstract class ALogger implements ILogger {
         pBuffer.append(suppressed.toString() + "\t|");
       }
       Throwable cause = pThrown.getCause();
-      if (cause != null && cause != pThrown) {
+      if (cause != null && cause != pThrown) { //2-nd level
         pBuffer.append(this.lineSeparator).append("Caused by: ");
         pBuffer.append(cause);
+        elements = cause.getStackTrace();
+        for (int i = 0; elements != null && i < elements.length; i++) {
+          pBuffer.append(this.lineSeparator + "\tat ");
+          pBuffer.append(elements[i].toString());
+        }
+        for (Throwable suppressed : cause.getSuppressed()) {
+          pBuffer.append(this.lineSeparator + "Suppressed: ");
+          pBuffer.append(suppressed.toString() + "\t|");
+        }
+        Throwable cause1 = cause.getCause();
+        if (cause1 != null && cause1 != cause) { //3-d level
+          pBuffer.append(this.lineSeparator).append("Caused by: ");
+          pBuffer.append(cause1);
+          elements = cause1.getStackTrace();
+          for (int i = 0; elements != null && i < elements.length; i++) {
+            pBuffer.append(this.lineSeparator + "\tat ");
+            pBuffer.append(elements[i].toString());
+          }
+          for (Throwable suppressed : cause1.getSuppressed()) {
+            pBuffer.append(this.lineSeparator + "Suppressed: ");
+            pBuffer.append(suppressed.toString() + "\t|");
+          }
+        }
       }
     }
     pBuffer.append(this.lineSeparator);

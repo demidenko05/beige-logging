@@ -3,6 +3,9 @@ site: https://sites.google.com/site/beigesoftware
 It contains of abstraction of simple, non-static, OOP and memory-friendly logger, its implementations,
 Apache Common Logging and SLS4J adapters.
 
+Version 1.0.2:
+PrintStackTrace printing down trough 3-level of cause.
+
 Version 1.0.1:
 Added JAR signing.
 Fixed crossplatform file.separator.

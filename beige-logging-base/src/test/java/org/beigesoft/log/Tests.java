@@ -44,6 +44,12 @@ public class Tests {
     }
     assertTrue(!logFile.exists());
     log.info(null, getClass(), "Tests file log 1-st str");
+    try {
+      Model m1 = new Model();
+      m1.throwsException();
+    } catch (Exception e) {
+      log.error(null, getClass(), "tst ", e);
+    }
     assertTrue(logFile.exists());
     Long size1 = Files.size(logFile.toPath());
     assertTrue(size1 > 0);
