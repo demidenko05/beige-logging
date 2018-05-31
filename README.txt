@@ -4,7 +4,7 @@ It contains of abstraction of simple, non-static, OOP and memory-friendly logger
 Apache Common Logging and SLS4J adapters.
 
 Version 1.0.2:
-PrintStackTrace printing down trough 3-level of cause.
+PrintStackTrace printing down trough all levels of causes.
 
 Version 1.0.1:
 Added JAR signing.

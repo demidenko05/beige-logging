@@ -191,35 +191,35 @@ public abstract class ALogger implements ILogger {
         pBuffer.append(suppressed.toString() + "\t|");
       }
       Throwable cause = pThrown.getCause();
-      if (cause != null && cause != pThrown) { //2-nd level
-        pBuffer.append(this.lineSeparator).append("Caused by: ");
-        pBuffer.append(cause);
-        elements = cause.getStackTrace();
-        for (int i = 0; elements != null && i < elements.length; i++) {
-          pBuffer.append(this.lineSeparator + "\tat ");
-          pBuffer.append(elements[i].toString());
-        }
-        for (Throwable suppressed : cause.getSuppressed()) {
-          pBuffer.append(this.lineSeparator + "Suppressed: ");
-          pBuffer.append(suppressed.toString() + "\t|");
-        }
-        Throwable cause1 = cause.getCause();
-        if (cause1 != null && cause1 != cause) { //3-d level
-          pBuffer.append(this.lineSeparator).append("Caused by: ");
-          pBuffer.append(cause1);
-          elements = cause1.getStackTrace();
-          for (int i = 0; elements != null && i < elements.length; i++) {
-            pBuffer.append(this.lineSeparator + "\tat ");
-            pBuffer.append(elements[i].toString());
-          }
-          for (Throwable suppressed : cause1.getSuppressed()) {
-            pBuffer.append(this.lineSeparator + "Suppressed: ");
-            pBuffer.append(suppressed.toString() + "\t|");
-          }
-        }
+      if (cause != null && cause != pThrown) { //2-nd, ... levels
+        exceptionToStringNext(pBuffer, cause);
       }
     }
     pBuffer.append(this.lineSeparator);
+  }
+
+  /**
+   * <p>Append thrown cause next level message to the buffer.</p>
+   * @param pBuffer Buffer
+   * @param pCause throwable
+   **/
+  private void exceptionToStringNext(final StringBuffer pBuffer,
+    final Throwable pCause) {
+    pBuffer.append(this.lineSeparator).append("Caused by: ");
+    pBuffer.append(pCause);
+    StackTraceElement[] elements = pCause.getStackTrace();
+    for (int i = 0; elements != null && i < elements.length; i++) {
+      pBuffer.append(this.lineSeparator + "\tat ");
+      pBuffer.append(elements[i].toString());
+    }
+    for (Throwable suppressed : pCause.getSuppressed()) {
+      pBuffer.append(this.lineSeparator + "Suppressed: ");
+      pBuffer.append(suppressed.toString() + "\t|");
+    }
+    Throwable causeNext = pCause.getCause();
+    if (causeNext != null && causeNext != pCause) { //next level
+      exceptionToStringNext(pBuffer, causeNext);
+    }
   }
 
  //Simple getters and setters:
