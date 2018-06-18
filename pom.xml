@@ -4,7 +4,7 @@
 
   <groupId>org.beigesoft</groupId>
   <artifactId>beige-logging</artifactId>
-  <version>1.0.2-SNAPSHOT</version>
+  <version>1.0.2</version>
   <packaging>pom</packaging>
   
   <name>Beigesoft logging Java library.</name>
@@ -254,7 +254,7 @@
     <url>https://github.com/demidenko05/beige-logging.git</url>
     <connection>scm:git:git@github.com:demidenko05/beige-logging.git</connection>
     <developerConnection>scm:git:git@github.com:demidenko05/beige-logging.git</developerConnection>
-    <tag>HEAD</tag>
+    <tag>beige-logging-1.0.2</tag>
   </scm>
 
 </project>
