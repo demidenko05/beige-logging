@@ -5,7 +5,7 @@
   <parent>
     <groupId>org.beigesoft</groupId>
     <artifactId>beige-logging</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.3-SNAPSHOT</version>
   </parent>
   
   <artifactId>beige-logging-slf4j-android</artifactId>
