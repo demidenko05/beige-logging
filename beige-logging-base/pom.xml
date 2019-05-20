@@ -10,7 +10,7 @@
   
   <artifactId>beige-logging-base</artifactId>
   <name>Beigesoft logging base Java library.</name>
-  <description>It contains of abstraction of simple, non-static, OOP and memory(performance)-friendly logger and its implementations.</description>
+  <description>It consists of abstraction of simple, non-static, OOP and memory(performance)-friendly loggers and its implementations.</description>
 
   <developers>
     <developer>
@@ -21,8 +21,8 @@
 
   <licenses>
     <license>
-      <name>GNU General Public License version 2</name>
-      <url>http://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html</url>
+      <name>BSD 2-Clause License</name>
+      <url>https://sites.google.com/site/beigesoftware/bsd2csl</url>
       <distribution>repo</distribution>
     </license>
   </licenses>

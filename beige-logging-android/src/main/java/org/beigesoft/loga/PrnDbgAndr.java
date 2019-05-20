@@ -26,48 +26,42 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.beigesoft.log;
+package org.beigesoft.loga;
+
+import android.util.Log;
+
+import org.beigesoft.log.IPrnDbg;
+import org.beigesoft.log.PrnThr;
 
 /**
- * <p>
- * Simple Model for testing.
- * </p>
+ * <p>Implementation of debug printer (logger) that log messages
+ * to debug logger itself, it print messages with Log.i.</p>
  *
  * @author Yury Demidenko
  */
-public class Model {
+public class PrnDbgAndr extends PrnThr implements IPrnDbg {
 
   /**
-   * <p>Nullable name.</p>
+   * <p>Make debug log.</p>
+   * @param pCls of debugged bean
+   * @param pMsg message
    **/
-  private String itsName;
-
-  /**
-   * <p>Setter for itsName.</p>
-   * @throws Exception
-   **/
-  public final void throwsException() throws Exception {
-    try {
-      int i = this.itsName.length();
-    } catch (Exception e) {
-      throw new ExceptionWithCode(1, "test ex ", e);
-    }
-  }
-
-  //Simple getters and setters:
-  /**
-   * <p>Getter for itsName.</p>
-   * @return String
-   **/
-  public final String getItsName() {
-    return this.itsName;
+  @Override
+  public final void prn(final Class<?> pCls, final String pMsg) {
+    Log.i(pCls.getSimpleName(), "thread#" + Thread.currentThread().getId()
+      + " DP> " + pMsg);
   }
 
   /**
-   * <p>Setter for itsName.</p>
-   * @param pItsName reference
+   * <p>Make debug log.</p>
+   * @param pCls of debugged bean
+   * @param pExc exception
    **/
-  public final void setItsName(final String pItsName) {
-    this.itsName = pItsName;
+  @Override
+  public final void prn(final Class<?> pCls, final Throwable pExc) {
+    StringBuffer sb = new StringBuffer("thread#" + Thread.currentThread()
+      .getId() + " DP> ");
+    excStr(sb, pExc);
+    Log.i(pCls.getSimpleName(), sb.toString());
   }
 }

@@ -29,45 +29,35 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package org.beigesoft.log;
 
 /**
- * <p>
- * Simple Model for testing.
- * </p>
+ * <p>Implementation of debug printer (logger) that log messages
+ * to debug logger itself, it print messages into System.out.</p>
  *
  * @author Yury Demidenko
  */
-public class Model {
+public class PrnDbgCon extends PrnThr implements IPrnDbg {
 
   /**
-   * <p>Nullable name.</p>
+   * <p>Make debug log.</p>
+   * @param pCls of debudgged bean
+   * @param pMsg message
    **/
-  private String itsName;
-
-  /**
-   * <p>Setter for itsName.</p>
-   * @throws Exception
-   **/
-  public final void throwsException() throws Exception {
-    try {
-      int i = this.itsName.length();
-    } catch (Exception e) {
-      throw new ExceptionWithCode(1, "test ex ", e);
-    }
-  }
-
-  //Simple getters and setters:
-  /**
-   * <p>Getter for itsName.</p>
-   * @return String
-   **/
-  public final String getItsName() {
-    return this.itsName;
+  @Override
+  public final void prn(final Class<?> pCls, final String pMsg) {
+    System.out.println("thread#" + Thread.currentThread().getId() + " "
+      + pCls.getSimpleName() + " DP> " + pMsg);
   }
 
   /**
-   * <p>Setter for itsName.</p>
-   * @param pItsName reference
+   * <p>Make debug log.</p>
+   * @param pCls of debudgged bean
+   * @param pExc exception
    **/
-  public final void setItsName(final String pItsName) {
-    this.itsName = pItsName;
+  @Override
+  public final void prn(final Class<?> pCls, final Throwable pExc) {
+    StringBuffer sb = new StringBuffer();
+    sb.append("thread#" + Thread.currentThread().getId() + " "
+      + pCls.getSimpleName() + " DP> ");
+    excStr(sb, pExc);
+    System.out.println(sb.toString());
   }
 }

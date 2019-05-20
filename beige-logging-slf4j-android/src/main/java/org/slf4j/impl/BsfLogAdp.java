@@ -22,36 +22,65 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *
  */
+/*
+BSD 2-Clause License
+
+Copyright (c) 2019, Beigesoft™
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+* Redistributions of source code must retain the above copyright notice, this
+  list of conditions and the following disclaimer.
+
+* Redistributions in binary form must reproduce the above copyright notice,
+  this list of conditions and the following disclaimer in the documentation
+  and/or other materials provided with the distribution.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
+
 package org.slf4j.impl;
 
 import org.slf4j.helpers.FormattingTuple;
 import org.slf4j.helpers.MarkerIgnoringBase;
 import org.slf4j.helpers.MessageFormatter;
 
-import org.beigesoft.log.ILogger;
+import org.beigesoft.log.ILog;
 
 /**
- * <p>Beige-logger adapter.</p>
+ * <p>Beige-log adapter.</p>
  *
  * @author Yury Demidenko
  */
-public class BeigeLoggerAdapter extends MarkerIgnoringBase {
-  private static final long serialVersionUID = -1227274521526687937L;
+public class BsfLogAdp extends MarkerIgnoringBase {
+  private static final long serialVersionUID = 1285074521526687937L;
 
-  private ILogger logger;
+  private ILog log;
 
   /**
-   * Package access allows only {@link BeigeLoggerFactory} to instantiate
-   * SimpleLogger instances.
+   * Package access allows only {@link BeigeLogFactory} to instantiate
+   * SimpleLog instances.
    */
-  BeigeLoggerAdapter(String tag) {
+  BsfLogAdp(String tag) {
       this.name = tag;
   }
 
   /**
-   * Is this logger instance enabled for the VERBOSE level?
+   * Is this log instance enabled for the VERBOSE level?
    *
-   * @return True if this Logger is enabled for level VERBOSE, false otherwise.
+   * @return True if this Log is enabled for level VERBOSE, false otherwise.
    */
   public boolean isTraceEnabled() {
       return true;
@@ -64,8 +93,8 @@ public class BeigeLoggerAdapter extends MarkerIgnoringBase {
    *          - the message object to be logged
    */
   public void trace(String msg) {
-    if (this.logger.getIsShowDebugMessages()) {
-      this.logger.debug(null, getClass(), msg);
+    if (this.log.getDbgSh()) {
+      this.log.debug(null, getClass(), msg);
     }
   }
 
@@ -74,7 +103,7 @@ public class BeigeLoggerAdapter extends MarkerIgnoringBase {
    * argument.
    *
    * <p>
-   * This form avoids superfluous object creation when the logger is disabled
+   * This form avoids superfluous object creation when the log is disabled
    * for level VERBOSE.
    * </p>
    *
@@ -84,9 +113,9 @@ public class BeigeLoggerAdapter extends MarkerIgnoringBase {
    *          the argument
    */
   public void trace(String format, Object arg) {
-    if (this.logger.getIsShowDebugMessages()) {
+    if (this.log.getDbgSh()) {
       FormattingTuple ft = MessageFormatter.arrayFormat(format, new Object[] {arg});
-      this.logger.debug(null, getClass(), ft.getMessage(), ft.getThrowable());
+      this.log.debug(null, getClass(), ft.getMessage(), ft.getThrowable());
     }
   }
 
@@ -95,7 +124,7 @@ public class BeigeLoggerAdapter extends MarkerIgnoringBase {
    * arguments.
    *
    * <p>
-   * This form avoids superfluous object creation when the logger is disabled
+   * This form avoids superfluous object creation when the log is disabled
    * for the VERBOSE level.
    * </p>
    *
@@ -107,9 +136,9 @@ public class BeigeLoggerAdapter extends MarkerIgnoringBase {
    *          the second argument
    */
   public void trace(String format, Object arg1, Object arg2) {
-    if (this.logger.getIsShowDebugMessages()) {
+    if (this.log.getDbgSh()) {
       FormattingTuple ft = MessageFormatter.arrayFormat(format, new Object[] {arg1, arg2});
-      this.logger.debug(null, getClass(), ft.getMessage(), ft.getThrowable());
+      this.log.debug(null, getClass(), ft.getMessage(), ft.getThrowable());
     }
   }
 
@@ -118,7 +147,7 @@ public class BeigeLoggerAdapter extends MarkerIgnoringBase {
    * arguments.
    *
    * <p>
-   * This form avoids superfluous object creation when the logger is disabled
+   * This form avoids superfluous object creation when the log is disabled
    * for the VERBOSE level.
    * </p>
    *
@@ -128,9 +157,9 @@ public class BeigeLoggerAdapter extends MarkerIgnoringBase {
    *          an array of arguments
    */
   public void trace(String format, Object... argArray) {
-    if (this.logger.getIsShowDebugMessages()) {
+    if (this.log.getDbgSh()) {
       FormattingTuple ft = MessageFormatter.arrayFormat(format, argArray);
-      this.logger.debug(null, getClass(), ft.getMessage(), ft.getThrowable());
+      this.log.debug(null, getClass(), ft.getMessage(), ft.getThrowable());
     }
   }
 
@@ -143,18 +172,18 @@ public class BeigeLoggerAdapter extends MarkerIgnoringBase {
    *          the exception (throwable) to log
    */
   public void trace(String msg, Throwable t) {
-    if (this.logger.getIsShowDebugMessages()) {
-      this.logger.debug(null, getClass(), msg, t);
+    if (this.log.getDbgSh()) {
+      this.log.debug(null, getClass(), msg, t);
     }
   }
 
   /**
-   * Is this logger instance enabled for the DEBUG level?
+   * Is this log instance enabled for the DEBUG level?
    *
-   * @return True if this Logger is enabled for level DEBUG, false otherwise.
+   * @return True if this Log is enabled for level DEBUG, false otherwise.
    */
   public boolean isDebugEnabled() {
-    return this.logger.getIsShowDebugMessages();
+    return this.log.getDbgSh();
   }
 
   /**
@@ -164,8 +193,8 @@ public class BeigeLoggerAdapter extends MarkerIgnoringBase {
    *          - the message object to be logged
    */
   public void debug(String msg) {
-    if (this.logger.getIsShowDebugMessages()) {
-      this.logger.debug(null, getClass(), msg);
+    if (this.log.getDbgSh()) {
+      this.log.debug(null, getClass(), msg);
     }
   }
 
@@ -173,7 +202,7 @@ public class BeigeLoggerAdapter extends MarkerIgnoringBase {
    * Log a message at level DEBUG according to the specified format and argument.
    *
    * <p>
-   * This form avoids superfluous object creation when the logger is disabled
+   * This form avoids superfluous object creation when the log is disabled
    * for level DEBUG.
    * </p>
    *
@@ -183,9 +212,9 @@ public class BeigeLoggerAdapter extends MarkerIgnoringBase {
    *          the argument
    */
   public void debug(String format, Object arg) {
-    if (this.logger.getIsShowDebugMessages()) {
+    if (this.log.getDbgSh()) {
       FormattingTuple ft = MessageFormatter.arrayFormat(format, new Object[] {arg});
-      this.logger.debug(null, getClass(), ft.getMessage(), ft.getThrowable());
+      this.log.debug(null, getClass(), ft.getMessage(), ft.getThrowable());
     }
   }
 
@@ -194,7 +223,7 @@ public class BeigeLoggerAdapter extends MarkerIgnoringBase {
    * arguments.
    *
    * <p>
-   * This form avoids superfluous object creation when the logger is disabled
+   * This form avoids superfluous object creation when the log is disabled
    * for the DEBUG level.
    * </p>
    *
@@ -206,9 +235,9 @@ public class BeigeLoggerAdapter extends MarkerIgnoringBase {
    *          the second argument
    */
   public void debug(String format, Object arg1, Object arg2) {
-    if (this.logger.getIsShowDebugMessages()) {
+    if (this.log.getDbgSh()) {
       FormattingTuple ft = MessageFormatter.arrayFormat(format, new Object[] {arg1, arg2});
-      this.logger.debug(null, getClass(), ft.getMessage(), ft.getThrowable());
+      this.log.debug(null, getClass(), ft.getMessage(), ft.getThrowable());
     }
   }
 
@@ -217,7 +246,7 @@ public class BeigeLoggerAdapter extends MarkerIgnoringBase {
    * arguments.
    *
    * <p>
-   * This form avoids superfluous object creation when the logger is disabled
+   * This form avoids superfluous object creation when the log is disabled
    * for the DEBUG level.
    * </p>
    *
@@ -227,9 +256,9 @@ public class BeigeLoggerAdapter extends MarkerIgnoringBase {
    *          an array of arguments
    */
   public void debug(String format, Object... argArray) {
-    if (this.logger.getIsShowDebugMessages()) {
+    if (this.log.getDbgSh()) {
       FormattingTuple ft = MessageFormatter.arrayFormat(format, argArray);
-      this.logger.debug(null, getClass(), ft.getMessage(), ft.getThrowable());
+      this.log.debug(null, getClass(), ft.getMessage(), ft.getThrowable());
     }
   }
 
@@ -242,15 +271,15 @@ public class BeigeLoggerAdapter extends MarkerIgnoringBase {
    *          the exception (throwable) to log
    */
   public void debug(String msg, Throwable t) {
-    if (this.logger.getIsShowDebugMessages()) {
-      this.logger.debug(null, getClass(), msg, t);
+    if (this.log.getDbgSh()) {
+      this.log.debug(null, getClass(), msg, t);
     }
   }
 
   /**
-   * Is this logger instance enabled for the INFO level?
+   * Is this log instance enabled for the INFO level?
    *
-   * @return True if this Logger is enabled for the INFO level, false otherwise.
+   * @return True if this Log is enabled for the INFO level, false otherwise.
    */
   public boolean isInfoEnabled() {
     return true;
@@ -263,14 +292,14 @@ public class BeigeLoggerAdapter extends MarkerIgnoringBase {
    *          - the message object to be logged
    */
   public void info(String msg) {
-    this.logger.info(null, getClass(), msg);
+    this.log.info(null, getClass(), msg);
   }
 
   /**
    * Log a message at level INFO according to the specified format and argument.
    *
    * <p>
-   * This form avoids superfluous object creation when the logger is disabled
+   * This form avoids superfluous object creation when the log is disabled
    * for the INFO level.
    * </p>
    *
@@ -281,7 +310,7 @@ public class BeigeLoggerAdapter extends MarkerIgnoringBase {
    */
   public void info(String format, Object arg) {
     FormattingTuple ft = MessageFormatter.arrayFormat(format, new Object[] {arg});
-    this.logger.warn(null, getClass(), ft.getMessage(), ft.getThrowable());
+    this.log.warn(null, getClass(), ft.getMessage(), ft.getThrowable());
   }
 
   /**
@@ -289,7 +318,7 @@ public class BeigeLoggerAdapter extends MarkerIgnoringBase {
    * arguments.
    *
    * <p>
-   * This form avoids superfluous object creation when the logger is disabled
+   * This form avoids superfluous object creation when the log is disabled
    * for the INFO level.
    * </p>
    *
@@ -302,7 +331,7 @@ public class BeigeLoggerAdapter extends MarkerIgnoringBase {
    */
   public void info(String format, Object arg1, Object arg2) {
     FormattingTuple ft = MessageFormatter.arrayFormat(format, new Object[] {arg1, arg2});
-    this.logger.warn(null, getClass(), ft.getMessage(), ft.getThrowable());
+    this.log.warn(null, getClass(), ft.getMessage(), ft.getThrowable());
   }
 
   /**
@@ -310,7 +339,7 @@ public class BeigeLoggerAdapter extends MarkerIgnoringBase {
    * arguments.
    *
    * <p>
-   * This form avoids superfluous object creation when the logger is disabled
+   * This form avoids superfluous object creation when the log is disabled
    * for the INFO level.
    * </p>
    *
@@ -321,7 +350,7 @@ public class BeigeLoggerAdapter extends MarkerIgnoringBase {
    */
   public void info(String format, Object... argArray) {
     FormattingTuple ft = MessageFormatter.arrayFormat(format, argArray);
-    this.logger.warn(null, getClass(), ft.getMessage(), ft.getThrowable());
+    this.log.warn(null, getClass(), ft.getMessage(), ft.getThrowable());
   }
 
   /**
@@ -334,13 +363,13 @@ public class BeigeLoggerAdapter extends MarkerIgnoringBase {
    *          the exception (throwable) to log
    */
   public void info(String msg, Throwable t) {
-    this.logger.warn(null, getClass(), msg, t);
+    this.log.warn(null, getClass(), msg, t);
   }
 
   /**
-   * Is this logger instance enabled for the WARN level?
+   * Is this log instance enabled for the WARN level?
    *
-   * @return True if this Logger is enabled for the WARN level, false
+   * @return True if this Log is enabled for the WARN level, false
    *         otherwise.
    */
   public boolean isWarnEnabled() {
@@ -354,7 +383,7 @@ public class BeigeLoggerAdapter extends MarkerIgnoringBase {
    *          - the message object to be logged
    */
   public void warn(String msg) {
-    this.logger.warn(null, getClass(), msg);
+    this.log.warn(null, getClass(), msg);
   }
 
   /**
@@ -362,7 +391,7 @@ public class BeigeLoggerAdapter extends MarkerIgnoringBase {
    * argument.
    *
    * <p>
-   * This form avoids superfluous object creation when the logger is disabled
+   * This form avoids superfluous object creation when the log is disabled
    * for the WARN level.
    * </p>
    *
@@ -373,7 +402,7 @@ public class BeigeLoggerAdapter extends MarkerIgnoringBase {
    */
   public void warn(String format, Object arg) {
     FormattingTuple ft = MessageFormatter.arrayFormat(format, new Object[] {arg});
-    this.logger.warn(null, getClass(), ft.getMessage(), ft.getThrowable());
+    this.log.warn(null, getClass(), ft.getMessage(), ft.getThrowable());
   }
 
   /**
@@ -381,7 +410,7 @@ public class BeigeLoggerAdapter extends MarkerIgnoringBase {
    * arguments.
    *
    * <p>
-   * This form avoids superfluous object creation when the logger is disabled
+   * This form avoids superfluous object creation when the log is disabled
    * for the WARN level.
    * </p>
    *
@@ -394,7 +423,7 @@ public class BeigeLoggerAdapter extends MarkerIgnoringBase {
    */
   public void warn(String format, Object arg1, Object arg2) {
     FormattingTuple ft = MessageFormatter.arrayFormat(format, new Object[] {arg1, arg2});
-    this.logger.warn(null, getClass(), ft.getMessage(), ft.getThrowable());
+    this.log.warn(null, getClass(), ft.getMessage(), ft.getThrowable());
   }
 
   /**
@@ -402,7 +431,7 @@ public class BeigeLoggerAdapter extends MarkerIgnoringBase {
    * arguments.
    *
    * <p>
-   * This form avoids superfluous object creation when the logger is disabled
+   * This form avoids superfluous object creation when the log is disabled
    * for the WARN level.
    * </p>
    *
@@ -413,7 +442,7 @@ public class BeigeLoggerAdapter extends MarkerIgnoringBase {
    */
   public void warn(String format, Object... argArray) {
     FormattingTuple ft = MessageFormatter.arrayFormat(format, argArray);
-    this.logger.warn(null, getClass(), ft.getMessage(), ft.getThrowable());
+    this.log.warn(null, getClass(), ft.getMessage(), ft.getThrowable());
   }
 
   /**
@@ -426,13 +455,13 @@ public class BeigeLoggerAdapter extends MarkerIgnoringBase {
    *          the exception (throwable) to log
    */
   public void warn(String msg, Throwable t) {
-    this.logger.warn(null, getClass(), msg, t);
+    this.log.warn(null, getClass(), msg, t);
   }
 
   /**
-   * Is this logger instance enabled for level ERROR?
+   * Is this log instance enabled for level ERROR?
    *
-   * @return True if this Logger is enabled for level ERROR, false otherwise.
+   * @return True if this Log is enabled for level ERROR, false otherwise.
    */
   public boolean isErrorEnabled() {
       return true;
@@ -445,7 +474,7 @@ public class BeigeLoggerAdapter extends MarkerIgnoringBase {
    *          - the message object to be logged
    */
   public void error(String msg) {
-    this.logger.error(null, getClass(), msg);
+    this.log.error(null, getClass(), msg);
   }
 
   /**
@@ -453,7 +482,7 @@ public class BeigeLoggerAdapter extends MarkerIgnoringBase {
    * argument.
    *
    * <p>
-   * This form avoids superfluous object creation when the logger is disabled
+   * This form avoids superfluous object creation when the log is disabled
    * for the ERROR level.
    * </p>
    *
@@ -464,7 +493,7 @@ public class BeigeLoggerAdapter extends MarkerIgnoringBase {
    */
   public void error(String format, Object arg) {
     FormattingTuple ft = MessageFormatter.arrayFormat(format, new Object[] {arg});
-    this.logger.error(null, getClass(), ft.getMessage(), ft.getThrowable());
+    this.log.error(null, getClass(), ft.getMessage(), ft.getThrowable());
   }
 
   /**
@@ -472,7 +501,7 @@ public class BeigeLoggerAdapter extends MarkerIgnoringBase {
    * arguments.
    *
    * <p>
-   * This form avoids superfluous object creation when the logger is disabled
+   * This form avoids superfluous object creation when the log is disabled
    * for the ERROR level.
    * </p>
    *
@@ -485,7 +514,7 @@ public class BeigeLoggerAdapter extends MarkerIgnoringBase {
    */
   public void error(String format, Object arg1, Object arg2) {
     FormattingTuple ft = MessageFormatter.arrayFormat(format, new Object[] {arg1, arg2});
-    this.logger.error(null, getClass(), ft.getMessage(), ft.getThrowable());
+    this.log.error(null, getClass(), ft.getMessage(), ft.getThrowable());
   }
 
   /**
@@ -493,7 +522,7 @@ public class BeigeLoggerAdapter extends MarkerIgnoringBase {
    * arguments.
    *
    * <p>
-   * This form avoids superfluous object creation when the logger is disabled
+   * This form avoids superfluous object creation when the log is disabled
    * for the ERROR level.
    * </p>
    *
@@ -504,7 +533,7 @@ public class BeigeLoggerAdapter extends MarkerIgnoringBase {
    */
   public void error(String format, Object... argArray) {
     FormattingTuple ft = MessageFormatter.arrayFormat(format, argArray);
-    this.logger.error(null, getClass(), ft.getMessage(), ft.getThrowable());
+    this.log.error(null, getClass(), ft.getMessage(), ft.getThrowable());
   }
 
   /**
@@ -517,23 +546,23 @@ public class BeigeLoggerAdapter extends MarkerIgnoringBase {
    *          the exception (throwable) to log
    */
   public void error(String msg, Throwable t) {
-    this.logger.error(null, getClass(), msg, t);
+    this.log.error(null, getClass(), msg, t);
   }
 
   //Simple getters and setters:
   /**
-   * <p>Getter for logger.</p>
-   * @return ILogger
+   * <p>Getter for log.</p>
+   * @return ILog
    **/
-  public final ILogger getLogger() {
-    return this.logger;
+  public final ILog getLog() {
+    return this.log;
   }
 
   /**
-   * <p>Setter for logger.</p>
-   * @param pLogger reference
+   * <p>Setter for log.</p>
+   * @param pLog reference
    **/
-  public final void setLogger(final ILogger pLogger) {
-    this.logger = pLogger;
+  public final void setLog(final ILog pLog) {
+    this.log = pLog;
   }
 }

@@ -6,7 +6,7 @@
 
 <suppressions>
   <suppress checks="MagicNumberCheck"
-    files="LoggerFile|LoggerFileAdp"/>
+    files="ALog|ALogFile|LogFileAdp"/>
   <suppress checks="AvoidInlineConditionals"
-    files="LoggerAclAdapter"/>
+    files="LogAclAdp"/>
 </suppressions>

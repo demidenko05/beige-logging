@@ -1,33 +1,48 @@
-package org.beigesoft.log.acl;
-
 /*
- * Copyright (c) 2017 Beigesoft ™
- *
- * Licensed under the GNU General Public License (GPL), Version 2.0
- * (the "License");
- * you may not use this file except in compliance with the License.
- *
- * You may obtain a copy of the License at
- *
- * http://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html
+BSD 2-Clause License
+
+Copyright (c) 2019, Beigesoft™
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+* Redistributions of source code must retain the above copyright notice, this
+  list of conditions and the following disclaimer.
+
+* Redistributions in binary form must reproduce the above copyright notice,
+  this list of conditions and the following disclaimer in the documentation
+  and/or other materials provided with the distribution.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+
+package org.beigesoft.lgacl;
 
 import org.apache.commons.logging.Log;
 
-import org.beigesoft.log.ILogger;
+import org.beigesoft.log.ILog;
 
 /**
- * <p>Adapter beige-logging to Apache Common Logging.
- * </p>
+ * <p>Adapter beige-log to Apache Common Logging.</p>
  *
  * @author Yury Demidenko
  */
-public class LoggerAclAdapter implements Log {
+public class LogAclAdp implements Log {
 
   /**
-   * <p>Logger delegate.</p>
+   * <p>Log delegate.</p>
    **/
-  private ILogger logger;
+  private ILog log;
 
   /**
    * Logs a message with debug log level.
@@ -36,9 +51,9 @@ public class LoggerAclAdapter implements Log {
    */
   @Override
   public final void debug(final Object msg) {
-    if (this.logger.getIsShowDebugMessages()) {
+    if (this.log.getDbgSh()) {
       String sMsg = msg == null ? "???" : msg.toString();
-      this.logger.debug(null, getClass(), sMsg);
+      this.log.debug(null, getClass(), sMsg);
     }
   }
 
@@ -51,7 +66,7 @@ public class LoggerAclAdapter implements Log {
   @Override
   public final void debug(final Object msg, final Throwable t) {
     String sMsg = msg == null ? "DEBUG EXCEPTION???" : msg.toString();
-    this.logger.warn(null, getClass(), sMsg, t);
+    this.log.warn(null, getClass(), sMsg, t);
   }
 
   /**
@@ -62,7 +77,7 @@ public class LoggerAclAdapter implements Log {
   @Override
   public final void error(final Object msg) {
     String sMsg = msg == null ? "???" : msg.toString();
-    this.logger.error(null, getClass(), sMsg);
+    this.log.error(null, getClass(), sMsg);
   }
 
   /**
@@ -74,7 +89,7 @@ public class LoggerAclAdapter implements Log {
   @Override
   public final void error(final Object msg, final Throwable t) {
     String sMsg = msg == null ? "???" : msg.toString();
-    this.logger.error(null, getClass(), sMsg, t);
+    this.log.error(null, getClass(), sMsg, t);
   }
 
   /**
@@ -85,7 +100,7 @@ public class LoggerAclAdapter implements Log {
   @Override
   public final void fatal(final Object msg) {
     String sMsg = msg == null ? "FATAL???" : msg.toString();
-    this.logger.error(null, getClass(), sMsg);
+    this.log.error(null, getClass(), sMsg);
   }
 
   /**
@@ -97,7 +112,7 @@ public class LoggerAclAdapter implements Log {
   @Override
   public final void fatal(final Object msg, final Throwable t) {
     String sMsg = msg == null ? "FATAL???" : msg.toString();
-    this.logger.error(null, getClass(), sMsg, t);
+    this.log.error(null, getClass(), sMsg, t);
   }
 
   /**
@@ -108,7 +123,7 @@ public class LoggerAclAdapter implements Log {
   @Override
   public final void info(final Object msg) {
     String sMsg = msg == null ? "???" : msg.toString();
-    this.logger.info(null, getClass(), sMsg);
+    this.log.info(null, getClass(), sMsg);
   }
 
   /**
@@ -120,7 +135,7 @@ public class LoggerAclAdapter implements Log {
   @Override
   public final void info(final Object msg, final Throwable t) {
     String sMsg = msg == null ? "???" : msg.toString();
-    this.logger.warn(null, getClass(), sMsg, t);
+    this.log.warn(null, getClass(), sMsg, t);
   }
 
   /**
@@ -130,11 +145,11 @@ public class LoggerAclAdapter implements Log {
    * (for example, <code>String</code> concatenation)
    * when the log level is more than debug.
    *
-   * @return true if debug is enabled in the underlying logger.
+   * @return true if debug is enabled in the underlying log.
    */
   @Override
   public final boolean isDebugEnabled() {
-    return this.logger.getIsShowDebugMessages();
+    return this.log.getDbgSh();
   }
 
   /**
@@ -144,7 +159,7 @@ public class LoggerAclAdapter implements Log {
    * (for example, <code>String</code> concatenation)
    * when the log level is more than error.
    *
-   * @return true if error is enabled in the underlying logger.
+   * @return true if error is enabled in the underlying log.
    */
   @Override
   public final boolean isErrorEnabled() {
@@ -158,7 +173,7 @@ public class LoggerAclAdapter implements Log {
    * (for example, <code>String</code> concatenation)
    * when the log level is more than fatal.
    *
-   * @return true if fatal is enabled in the underlying logger.
+   * @return true if fatal is enabled in the underlying log.
    */
   @Override
   public final boolean isFatalEnabled() {
@@ -172,7 +187,7 @@ public class LoggerAclAdapter implements Log {
    * (for example, <code>String</code> concatenation)
    * when the log level is more than info.
    *
-   * @return true if info is enabled in the underlying logger.
+   * @return true if info is enabled in the underlying log.
    */
   @Override
   public final boolean isInfoEnabled() {
@@ -186,11 +201,11 @@ public class LoggerAclAdapter implements Log {
    * (for example, <code>String</code> concatenation)
    * when the log level is more than trace.
    *
-   * @return true if trace is enabled in the underlying logger.
+   * @return true if trace is enabled in the underlying log.
    */
   @Override
   public final boolean isTraceEnabled() {
-    return this.logger.getIsShowDebugMessages();
+    return this.log.getDbgSh();
   }
 
   /**
@@ -200,7 +215,7 @@ public class LoggerAclAdapter implements Log {
    * (for example, <code>String</code> concatenation)
    * when the log level is more than warn.
    *
-   * @return true if warn is enabled in the underlying logger.
+   * @return true if warn is enabled in the underlying log.
    */
   @Override
   public final boolean isWarnEnabled() {
@@ -215,7 +230,7 @@ public class LoggerAclAdapter implements Log {
   @Override
   public final void trace(final Object msg) {
     String sMsg = msg == null ? "TRACE???" : msg.toString();
-    this.logger.debug(null, getClass(), sMsg);
+    this.log.debug(null, getClass(), sMsg);
   }
 
   /**
@@ -227,7 +242,7 @@ public class LoggerAclAdapter implements Log {
   @Override
   public final void trace(final Object msg, final Throwable t) {
     String sMsg = msg == null ? "TRACE EXCEPTION???" : msg.toString();
-    this.logger.warn(null, getClass(), sMsg, t);
+    this.log.warn(null, getClass(), sMsg, t);
   }
 
   /**
@@ -238,7 +253,7 @@ public class LoggerAclAdapter implements Log {
   @Override
   public final void warn(final Object msg) {
     String sMsg = msg == null ? "???" : msg.toString();
-    this.logger.warn(null, getClass(), sMsg);
+    this.log.warn(null, getClass(), sMsg);
   }
 
   /**
@@ -250,24 +265,24 @@ public class LoggerAclAdapter implements Log {
   @Override
   public final void warn(final Object msg, final Throwable t) {
     String sMsg = msg == null ? "???" : msg.toString();
-    this.logger.warn(null, getClass(), sMsg, t);
+    this.log.warn(null, getClass(), sMsg, t);
   }
 
 
   //Simple getters and setters:
   /**
-   * <p>Getter for logger.</p>
-   * @return ILogger
+   * <p>Getter for log.</p>
+   * @return ILog
    **/
-  public final ILogger getLogger() {
-    return this.logger;
+  public final ILog getLog() {
+    return this.log;
   }
 
   /**
-   * <p>Setter for logger.</p>
-   * @param pLogger reference
+   * <p>Setter for log.</p>
+   * @param pLog reference
    **/
-  public final void setLogger(final ILogger pLogger) {
-    this.logger = pLogger;
+  public final void setLog(final ILog pLog) {
+    this.log = pLog;
   }
 }

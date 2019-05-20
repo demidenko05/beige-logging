@@ -1,4 +1,4 @@
-package org.beigesoft.log.acl;
+package org.beigesoft.lgacl;
 
 /*
  * Copyright (c) 2017 Beigesoft ™
@@ -37,10 +37,10 @@ public class Tests {
   @Test
   public void testFileLog() throws Exception {
     System.setProperty("org.apache.commons.logging.diagnostics.dest", "STDOUT");
-    System.setProperty("org.apache.commons.logging.LogFactory", "org.apache.commons.logging.impl.LogFactoryBeigeLogFile");
+    System.setProperty("org.apache.commons.logging.LogFactory", "org.apache.commons.logging.impl.BsfLogFlFct");
     Log logger = LogFactory.getLog(Tests.class);
     logger.info("Tests file log1");
-    Log logger2 = LogFactory.getLog(LoggerFile.class);
+    Log logger2 = LogFactory.getLog(LogFile.class);
     logger.info("Tests file log2");
     assertEquals(logger, logger2);
     System.out.println("Logger object - >" + logger2);

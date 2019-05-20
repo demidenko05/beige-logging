@@ -18,32 +18,38 @@
 package org.apache.commons.logging.impl;
 
 import java.util.Hashtable;
+import java.util.Properties;
+import java.io.File;
+import java.io.InputStream;
+import java.net.URL;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.commons.logging.LogConfigurationException;
 
-import org.beigesoft.log.LoggerFile;
-import org.beigesoft.log.acl.LoggerAclAdapter;
-import org.beigesoft.log.FillerFileLogProperties;
-import org.beigesoft.log.IDebugPrinter;
-import org.beigesoft.log.DebugPrinterConsole;
+import org.beigesoft.log.LogFile;
+import org.beigesoft.log.FilFlLogPrp;
+import org.beigesoft.log.IPrnDbg;
+import org.beigesoft.lgacl.LogAclAdp;
+import org.beigesoft.loga.PrnDbgAndr;
+
+import android.os.Environment;
 
 /**
  * <p>Concrete subclass of {@link LogFactory}.
- * Returns only file logger for all classes.</p>
+ * Returns only file log for all classes.</p>
  *
  */
-public class LogFactoryBeigeLogFile extends LogFactory {
+public class BsfLogFlFctAndr extends LogFactory {
 
-  private LoggerAclAdapter logger;
+  private LogAclAdp log;
 
-  private FillerFileLogProperties fillerFileLogProperties;
+  private FilFlLogPrp filFlLogPrp;
 
   /**
    * <p>Debug printer.</p>
    **/
-  private IDebugPrinter debugPrinter;
+  private IPrnDbg prnDbg;
 
   /**
    * Configuration attributes.
@@ -60,7 +66,7 @@ public class LogFactoryBeigeLogFile extends LogFactory {
    *  instance cannot be returned
    */
   public Log getInstance(Class clazz) throws LogConfigurationException {
-    return lazyGetLogger();
+    return lazyGetLog();
   }
 
   /**
@@ -81,7 +87,7 @@ public class LogFactoryBeigeLogFile extends LogFactory {
    *  instance cannot be returned
    */
   public Log getInstance(String name) throws LogConfigurationException {
-    return lazyGetLogger();
+    return lazyGetLog();
   }
 
   /**
@@ -160,59 +166,61 @@ public class LogFactoryBeigeLogFile extends LogFactory {
   /**
    * <p>Only constructor</p>
    **/
-  public final LoggerAclAdapter lazyGetLogger() {
-    if (this.logger == null) {
+  public final LogAclAdp lazyGetLog() {
+    if (this.log == null) {
       synchronized (this) {
-        if (this.logger == null) {
-          LoggerFile log = new LoggerFile();
-          if (this.fillerFileLogProperties == null) {
-            this.fillerFileLogProperties = new FillerFileLogProperties();
+        if (this.log == null) {
+          LogFile lg = new LogFile();
+          if (this.filFlLogPrp == null) {
+            this.filFlLogPrp = new FilFlLogPrp();
           }
-          if (this.debugPrinter == null) {
-            this.debugPrinter = new DebugPrinterConsole();
+          if (this.prnDbg == null) {
+            this.prnDbg = new PrnDbgAndr();
           }
-          this.fillerFileLogProperties.setDebugPrinter(this.debugPrinter);
-          this.fillerFileLogProperties.fillProperties(log, "acl-all");
-          LoggerAclAdapter loggerAclAdapter = new LoggerAclAdapter();
-          loggerAclAdapter.setLogger(log);
-          this.logger = loggerAclAdapter;
+          this.filFlLogPrp.setLogDir(Environment.getExternalStorageDirectory()
+            .getAbsolutePath());
+          this.filFlLogPrp.setPrnDbg(this.prnDbg);
+          this.filFlLogPrp.fill(lg, "acl-all");
+          LogAclAdp logAclAdp = new LogAclAdp();
+          logAclAdp.setLog(lg);
+          this.log = logAclAdp;
         }
       }
     }
-    return this.logger;
+    return this.log;
   }
 
   //Simple getters and setters:
   /**
-   * <p>Getter for fillerFileLogProperties.</p>
-   * @return FillerFileLogProperties
+   * <p>Getter for filFlLogPrp.</p>
+   * @return FilFlLogPrp
    **/
-  public final synchronized FillerFileLogProperties getFillerFileLogProperties() {
-    return this.fillerFileLogProperties;
+  public final synchronized FilFlLogPrp getFilFlLogPrp() {
+    return this.filFlLogPrp;
   }
 
   /**
-   * <p>Setter for fillerFileLogProperties.</p>
-   * @param pFillerFileLogProperties reference
+   * <p>Setter for filFlLogPrp.</p>
+   * @param pFilFlLogPrp reference
    **/
-  public final synchronized void setFillerFileLogProperties(
-    final FillerFileLogProperties pFillerFileLogProperties) {
-    this.fillerFileLogProperties = pFillerFileLogProperties;
+  public final synchronized void setFilFlLogPrp(
+    final FilFlLogPrp pFilFlLogPrp) {
+    this.filFlLogPrp = pFilFlLogPrp;
   }
 
   /**
-   * <p>Getter for debugPrinter.</p>
-   * @return IDebugPrinter
+   * <p>Getter for prnDbg.</p>
+   * @return IPrnDbg
    **/
-  public final synchronized IDebugPrinter getDebugPrinter() {
-    return this.debugPrinter;
+  public final synchronized IPrnDbg getPrnDbg() {
+    return this.prnDbg;
   }
 
   /**
-   * <p>Setter for debugPrinter.</p>
-   * @param pDebugPrinter reference
+   * <p>Setter for prnDbg.</p>
+   * @param pPrnDbg reference
    **/
-  public final synchronized void setDebugPrinter(final IDebugPrinter pDebugPrinter) {
-    this.debugPrinter = pDebugPrinter;
+  public final synchronized void setPrnDbg(final IPrnDbg pPrnDbg) {
+    this.prnDbg = pPrnDbg;
   }
 }

@@ -26,48 +26,8 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.beigesoft.log;
-
 /**
- * <p>
- * Simple Model for testing.
- * </p>
- *
+ * <p>Contains of Apache Common Logger adapter.</p>
  * @author Yury Demidenko
  */
-public class Model {
-
-  /**
-   * <p>Nullable name.</p>
-   **/
-  private String itsName;
-
-  /**
-   * <p>Setter for itsName.</p>
-   * @throws Exception
-   **/
-  public final void throwsException() throws Exception {
-    try {
-      int i = this.itsName.length();
-    } catch (Exception e) {
-      throw new ExceptionWithCode(1, "test ex ", e);
-    }
-  }
-
-  //Simple getters and setters:
-  /**
-   * <p>Getter for itsName.</p>
-   * @return String
-   **/
-  public final String getItsName() {
-    return this.itsName;
-  }
-
-  /**
-   * <p>Setter for itsName.</p>
-   * @param pItsName reference
-   **/
-  public final void setItsName(final String pItsName) {
-    this.itsName = pItsName;
-  }
-}
+package org.beigesoft.lgacl;
