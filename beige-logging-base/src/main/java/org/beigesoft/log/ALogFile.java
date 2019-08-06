@@ -223,14 +223,19 @@ public abstract class ALogFile extends ALog {
   public final synchronized OutputStreamWriter lazyGetWriter() {
     try {
       if (this.writer == null) {
+        boolean isAppend = true;
         File f = new File(getPath() + "0.log");
         if (f.exists() && f.length() >= this.maxSize) {
           File f1 = new File(getPath() + "1.log");
           if (!f1.exists() || f1.length() < this.maxSize) {
             f = f1;
+          } else {
+            isAppend = false;
+            if (f.lastModified() > f1.lastModified()) {
+              f = f1;
+            }
           }
         }
-        boolean isAppend = f.exists();
         this.writer = new OutputStreamWriter(new FileOutputStream(f, isAppend),
             Charset.forName("UTF-8").newEncoder());
         this.file = f;
