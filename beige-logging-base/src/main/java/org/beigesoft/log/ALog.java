@@ -28,6 +28,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 package org.beigesoft.log;
 
+import java.util.List;
 import java.util.Map;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -56,14 +57,24 @@ public abstract class ALog extends PrnThr implements ILog {
   private DateFormat fmtDt = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
 
   /**
-   * <p>Get preferred detail level floor, 0 default.</p>
+   * <p>Preferred detail level floor, 0 default.</p>
    **/
   private int dbgFl = 0;
 
   /**
-   * <p>Get preferred detail level ceiling, 99999999 default.</p>
+   * <p>Preferred detail level ceiling, 99999999 default.</p>
    **/
   private int dbgCl = 99999999;
+
+  /**
+   * <p>Multi-ranges.</p>
+   **/
+  private List<Range> ranges;
+
+  /**
+   * <p>Range method, ONLY default.</p>
+   **/
+  private ERngMth rngMth = ERngMth.ONLY;
 
   /**
    * <p>Get preferred detail level floor, e.g. for suppress unwanted
@@ -83,7 +94,7 @@ public abstract class ALog extends PrnThr implements ILog {
   }
 
   /**
-   * <p>Set preferred detail floor level.</p>
+   * <p>List preferred detail floor level.</p>
    * @param pDbgFl preferred detail floor level
    **/
   @Override
@@ -101,7 +112,7 @@ public abstract class ALog extends PrnThr implements ILog {
   }
 
   /**
-   * <p>Set preferred detail ceiling level.</p>
+   * <p>List preferred detail ceiling level.</p>
    * @param pDbgCl preferred detail ceiling level
    **/
   @Override
@@ -110,7 +121,7 @@ public abstract class ALog extends PrnThr implements ILog {
   }
 
   /**
-   * <p>Set is show debug messages.</p>
+   * <p>List is show debug messages.</p>
    * @param pDbgSh is show debug messages?
    **/
   @Override
@@ -128,13 +139,58 @@ public abstract class ALog extends PrnThr implements ILog {
   }
 
   /**
-   * <p>Set is show debug messages for class preference.</p>
+   * <p>List is show debug messages for class preference.</p>
    * @param pCls of bean
    * @param pDbgSh is show debug messages?
    **/
   @Override
   public final void setDbgSh(final Class<?> pCls, final boolean pDbgSh) {
     this.dbgShMap.put(pCls, pDbgSh);
+  }
+
+  /**
+   * <p>Get is show debug messages preference for given class and debug level.
+   * performance friendly example:
+   * <pre>
+   *  if (this.log.getDbgSh(this.getClass(), 224365)) {
+   *    // make some hard job:
+   *    String msg = " data for " + formatDate(doc.dt) + " x1, x2"
+   *      + Math.round(x1, this.settings.getRoundingMode()) .....
+   *    // report message:
+   *    this.log.debug(this.getClass(), msg);
+   *  }
+   * </pre>
+   * Result depends of getDbgSh(pCls) && IN_RANGE(pLev).
+   * </p>
+   * @param pCls of bean
+   * @param pLev debug level
+   * @return is show debug messages?
+   **/
+  @Override
+  public final boolean getDbgSh(final Class<?> pCls, final int pLev) {
+    boolean rz;
+    if (this.dbgShMap != null) {
+      rz = this.dbgShMap.get(pCls);
+    } else {
+      rz = this.dbgSh;
+    }
+    if (!rz) {
+      return rz;
+    }
+    if (this.rngMth == ERngMth.MULTI && this.ranges != null
+      && this.ranges.size() > 0) {
+      if (this.dbgFl <= pLev && this.dbgCl >= pLev) {
+        return true;
+      }
+      for (Range rng : this.ranges) {
+        if (rng.getDbgFl() <= pLev && rng.getDbgCl() >= pLev) {
+          return true;
+        }
+      }
+      return false;
+    } else {
+      return this.dbgFl <= pLev && this.dbgCl >= pLev;
+    }
   }
 
   /**
@@ -162,6 +218,42 @@ public abstract class ALog extends PrnThr implements ILog {
       return this.dbgShMap.get(pCls);
     }
     return this.dbgSh;
+  }
+
+  /**
+   * <p>Getter for ranges.</p>
+   * @return List<Range>
+   **/
+  @Override
+  public final List<Range> getRanges() {
+    return this.ranges;
+  }
+
+  /**
+   * <p>Setter for ranges.</p>
+   * @param pRanges reference
+   **/
+  @Override
+  public final void setRanges(final List<Range> pRanges) {
+    this.ranges = pRanges;
+  }
+
+  /**
+   * <p>Getter for rngMth.</p>
+   * @return ERngMth
+   **/
+  @Override
+  public final ERngMth getRngMth() {
+    return this.rngMth;
+  }
+
+  /**
+   * <p>Setter for rngMth.</p>
+   * @param pRngMth reference
+   **/
+  @Override
+  public final void setRngMth(final ERngMth pRngMth) {
+    this.rngMth = pRngMth;
   }
 
   //Simple getters and setters:

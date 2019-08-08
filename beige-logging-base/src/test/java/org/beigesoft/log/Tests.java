@@ -28,6 +28,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 package org.beigesoft.log;
 
+import java.util.ArrayList;
 import java.io.*;
 import java.nio.file.Files;
  
@@ -72,6 +73,28 @@ public class Tests {
     log.info(null, getClass(), "Tests file log 2-nd str");
     Long size2 = Files.size(logFile.toPath());
     assertTrue(size2 > size1);
+    log.setDbgSh(true);
+    log.setDbgFl(8000);
+    log.setDbgCl(8000);
+    assertTrue(log.getDbgSh(this.getClass(), 8000));
+    assertTrue(!log.getDbgSh(this.getClass(), 8001));
+    assertTrue(!log.getDbgSh(this.getClass(), 7999));
+    log.setRngMth(ERngMth.MULTI);
+    log.setRanges(new ArrayList<Range>());
+    Range rng1 = new Range();
+    rng1.setDbgFl(8000);
+    rng1.setDbgCl(8000);
+    log.getRanges().add(rng1);
+    Range rng2 = new Range();
+    rng2.setDbgFl(7000);
+    rng2.setDbgCl(7001);
+    log.getRanges().add(rng2);
+    assertTrue(log.getDbgSh(this.getClass(), 8000));
+    assertTrue(!log.getDbgSh(this.getClass(), 8001));
+    assertTrue(!log.getDbgSh(this.getClass(), 7999));
+    assertTrue(log.getDbgSh(this.getClass(), 7000));
+    assertTrue(log.getDbgSh(this.getClass(), 7001));
+    assertTrue(!log.getDbgSh(this.getClass(), 6999));
   }
 
   @Test

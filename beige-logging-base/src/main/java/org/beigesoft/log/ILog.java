@@ -28,6 +28,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 package org.beigesoft.log;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -114,10 +115,54 @@ public interface ILog {
   boolean getDbgSh();
 
   /**
-   * <p>Set is show debug messages preference.</p>
+   * <p>List is show debug messages preference.</p>
    * @param pDbgSh is show debug messages?
    **/
   void setDbgSh(boolean pDbgSh);
+
+  /**
+   * <p>Getter for ranges.</p>
+   * @return List<Range>
+   **/
+  List<Range> getRanges();
+
+  /**
+   * <p>Setter for ranges.</p>
+   * @param pRanges reference
+   **/
+  void setRanges(List<Range> pRanges);
+
+  /**
+   * <p>Getter for rngMth.</p>
+   * @return ERngMth
+   **/
+  ERngMth getRngMth();
+
+  /**
+   * <p>Setter for rngMth.</p>
+   * @param pRngMth reference
+   **/
+  void setRngMth(ERngMth pRngMth);
+
+  /**
+   * <p>Get is show debug messages preference for given class and debug level.
+   * performance friendly example:
+   * <pre>
+   *  if (this.log.getDbgSh(this.getClass(), 224365)) {
+   *    // make some hard job:
+   *    String msg = " data for " + formatDate(doc.dt) + " x1, x2"
+   *      + Math.round(x1, this.settings.getRoundingMode()) .....
+   *    // report message:
+   *    this.log.debug(this.getClass(), msg);
+   *  }
+   * </pre>
+   * Result depends of getDbgSh(pCls) && IN_RANGE(pLev).
+   * </p>
+   * @param pCls of bean
+   * @param pLev debug level
+   * @return is show debug messages?
+   **/
+  boolean getDbgSh(Class<?> pCls, int pLev);
 
   /**
    * <p>Get is show debug messages preference for given class.
@@ -141,7 +186,7 @@ public interface ILog {
   boolean getDbgSh(Class<?> pCls);
 
   /**
-   * <p>Set is show debug messages for class preference.</p>
+   * <p>List is show debug messages for class preference.</p>
    * @param pCls of bean
    * @param pDbgSh is show debug messages?
    **/
@@ -162,7 +207,7 @@ public interface ILog {
   int getDbgFl();
 
   /**
-   * <p>Set preferred detail floor level.</p>
+   * <p>List preferred detail floor level.</p>
    * @param pDbgFl preferred detail floor level
    **/
   void setDbgFl(int pDbgFl);
@@ -174,7 +219,7 @@ public interface ILog {
   int getDbgCl();
 
   /**
-   * <p>Set preferred detail ceiling level.</p>
+   * <p>List preferred detail ceiling level.</p>
    * @param pDbgCl preferred detail ceiling level
    **/
   void setDbgCl(int pDbgCl);
