@@ -291,6 +291,7 @@ public abstract class ALogFile extends ALog {
           ex.printStackTrace();
         }
       }
+      System.out.println("Closer log-file stopped " + this);
     }
 
     /**
