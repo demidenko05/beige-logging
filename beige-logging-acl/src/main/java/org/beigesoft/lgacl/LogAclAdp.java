@@ -47,7 +47,7 @@ public class LogAclAdp implements Log {
   /**
    * Logs a message with debug log level.
    *
-   * @param message log this message
+   * @param msg log this message
    */
   @Override
   public final void debug(final Object msg) {
@@ -60,7 +60,7 @@ public class LogAclAdp implements Log {
   /**
    * Logs an error with debug log level.
    *
-   * @param message log this message
+   * @param msg log this message
    * @param t log this cause
    */
   @Override
@@ -72,7 +72,7 @@ public class LogAclAdp implements Log {
   /**
    * Logs a message with error log level.
    *
-   * @param message log this message
+   * @param msg log this message
    */
   @Override
   public final void error(final Object msg) {
@@ -83,7 +83,7 @@ public class LogAclAdp implements Log {
   /**
    * Logs an error with error log level.
    *
-   * @param message log this message
+   * @param msg log this message
    * @param t log this cause
    */
   @Override
@@ -95,7 +95,7 @@ public class LogAclAdp implements Log {
   /**
    * Logs a message with fatal log level.
    *
-   * @param message log this message
+   * @param msg log this message
    */
   @Override
   public final void fatal(final Object msg) {
@@ -106,7 +106,7 @@ public class LogAclAdp implements Log {
   /**
    * Logs an error with fatal log level.
    *
-   * @param message log this message
+   * @param msg log this message
    * @param t log this cause
    */
   @Override
@@ -118,7 +118,7 @@ public class LogAclAdp implements Log {
   /**
    * Logs a message with info log level.
    *
-   * @param message log this message
+   * @param msg log this message
    */
   @Override
   public final void info(final Object msg) {
@@ -129,7 +129,7 @@ public class LogAclAdp implements Log {
   /**
    * Logs an error with info log level.
    *
-   * @param message log this message
+   * @param msg log this message
    * @param t log this cause
    */
   @Override
@@ -225,7 +225,7 @@ public class LogAclAdp implements Log {
   /**
    * Logs a message with trace log level.
    *
-   * @param message log this message
+   * @param msg log this message
    */
   @Override
   public final void trace(final Object msg) {
@@ -236,7 +236,7 @@ public class LogAclAdp implements Log {
   /**
    * Logs an error with trace log level.
    *
-   * @param message log this message
+   * @param msg log this message
    * @param t log this cause
    */
   @Override
@@ -248,7 +248,7 @@ public class LogAclAdp implements Log {
   /**
    * Logs a message with warn log level.
    *
-   * @param message log this message
+   * @param msg log this message
    */
   @Override
   public final void warn(final Object msg) {
@@ -259,7 +259,7 @@ public class LogAclAdp implements Log {
   /**
    * Logs an error with warn log level.
    *
-   * @param message log this message
+   * @param msg log this message
    * @param t log this cause
    */
   @Override
