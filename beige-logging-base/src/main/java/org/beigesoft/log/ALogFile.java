@@ -291,6 +291,23 @@ public abstract class ALogFile extends ALog {
           ex.printStackTrace();
         }
       }
+      try {
+        synchronized (ALogFile.this) {
+          if (ALogFile.this.getWriter() != null) {
+            try {
+              ALogFile.this.writer.close();
+            } catch (Exception ex) {
+              ex.printStackTrace();
+            } finally {
+              ALogFile.this.logsCnt = 0;
+              ALogFile.this.writer = null;
+              ALogFile.this.file = null;
+            }
+          }
+        }
+      } catch (Exception ex) {
+        ex.printStackTrace();
+      }
       System.out.println("Closer log-file stopped " + this);
     }
 
