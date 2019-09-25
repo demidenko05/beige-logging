@@ -183,6 +183,7 @@ public abstract class ALogFile extends ALog {
         lazyGetWriter().write(pMsg);
       } catch (Exception ex) {
         ex.printStackTrace();
+        throw new RuntimeException(ex);
       } finally {
         if (this.writer != null) {
           try {
@@ -211,6 +212,7 @@ public abstract class ALogFile extends ALog {
         this.writer.flush();
       } catch (Exception ex) {
         ex.printStackTrace();
+        throw new RuntimeException(ex);
       }
     }
     this.lstWrTm = new Date().getTime();
